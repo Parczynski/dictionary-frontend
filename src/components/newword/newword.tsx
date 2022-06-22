@@ -1,9 +1,11 @@
-import { FormEvent, useContext, useState } from "react"
+import { FormEvent, useCallback, useContext, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../../core/auth"
 import { BackButton } from "../back/backbutton"
 import { TextInput } from '../input/input'
 
 import './newword.scss'
+
 
 export const NewWord= () => {
 
@@ -14,8 +16,28 @@ export const NewWord= () => {
     const [ translate, setTranslate ] = useState( '' )
     const [ examples, setExamples ] = useState( '' )
 
+    // const getWordData = useCallback( debounce( ( value: string ) => {
+    //     fetch( /** Words API */ )
+    //         .then( response => response.json() )
+    //         .then( response => {
+    //             console.log( response )
+    //             const word = response.pop() as IDictionaryWord
+    //             setPhonetic( word.phonetic )
+    //             setMeaning( word.meanings[0].definitions[0].definition )
+    //         })
+    // }, 1000 ), [] )
+
+    const navigate = useNavigate()
+
+    const updateWord = ( value: string ) => {
+        setWord( value )
+        // getWordData( value )
+    }
+
     const onSubmit = async (e: FormEvent) => {
+
         e.preventDefault()
+
         fetch( `${import.meta.env.VITE_API_URL}/words`, {
             headers: {
                 'Content-Type':'application/json',
@@ -25,7 +47,7 @@ export const NewWord= () => {
             body: JSON.stringify( { word, meaning, phonetic, translate, examples })
         })
         .then( response => response.json() )
-        .then( response => console.log( response ) )
+        .then( response => navigate( '/' ) )
     }
     
 
@@ -35,7 +57,7 @@ export const NewWord= () => {
 
             <BackButton />
             
-            <TextInput value={word} onChange={setWord} title="Word" />
+            <TextInput value={word} onChange={updateWord} title="Word" />
             <TextInput value={meaning} onChange={setMeaning} title="Meaning" />
             <TextInput value={phonetic} onChange={setPhonetic} title="Phonetic" />
             <TextInput value={translate} onChange={setTranslate} title="Translate" />
@@ -45,5 +67,24 @@ export const NewWord= () => {
 
         </form>
     )
+
+}
+
+
+function debounce( cb: CallableFunction, timeout: number ) {
+
+    let timeoutHandler: number
+
+    return ( ...args: any[] ) => {
+
+        clearInterval( timeoutHandler )
+
+        timeoutHandler = setTimeout( () => {
+            cb( ...args )
+        }, timeout )
+        
+    }
+
+
 
 }

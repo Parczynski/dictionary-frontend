@@ -29,6 +29,7 @@ jobs:
           remote_key: ${{ secrets.DEPLOY_KEY }}
           local_dir: "dist/"
           remote_dir: "/var/www/dictionary/frontend"
+          VITE_API_URL: "https://dict.webomus.ru"
         run: |
           mkdir ~/.ssh
           echo "$remote_key" > ~/.ssh/id_github

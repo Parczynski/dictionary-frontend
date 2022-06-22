@@ -1,0 +1,56 @@
+@use '../../mixins.scss';
+
+#wordsScreen {
+    .word {
+        margin:2em 0;
+
+        @include mixins.desktop {
+            float:left;
+            padding:1em;
+        }
+
+        .title {
+            font-size:2em;
+            text-align:center;
+            font-weight: bold;
+            margin:.5em 0;
+        }
+        .example {
+            color:#aaa;
+            margin:.5em 0;
+            
+            &::before {
+                content:"|";
+                margin-right:1em;
+            }
+        }
+        
+    }
+
+    .newWord {
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        padding:1em;
+        background-color: #fff;
+
+
+        .button {
+            display:block;
+            text-align: center;
+            width:100%;
+        }
+
+        
+        @include mixins.desktop {
+            position:relative;
+            text-align: right;
+
+            .button {
+                width:max-content;
+                display: inline-block;
+            }
+        }
+    }
+}

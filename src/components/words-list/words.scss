@@ -12,9 +12,10 @@
     .word {
         margin:3em 0;
         text-align:center;
-        max-width:450px;
+        
 
         @include mixins.desktop {
+            max-width:450px;
             margin:0;
             padding:1em;
         }

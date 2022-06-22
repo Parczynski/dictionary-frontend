@@ -1,13 +1,25 @@
+@use '../../mixins.scss';
+
 .authForm {
     padding:2em;
-    height:100vh;
     box-sizing: border-box;
+    position:absolute;
+    inset:0;
+    margin:auto;
+    height:min-content;
 
     h1 {
-        margin-bottom:5em;
+        margin-bottom:1em;
     }
     input {
         width:100%;
         margin:1em 0;
     }
+    
+
+    @include mixins.desktop {
+        max-width:750px;
+        margin-inline: auto;
+    }
+
 }
